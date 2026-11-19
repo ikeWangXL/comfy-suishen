@@ -2,7 +2,11 @@
 
 手机用来下任务、看进度和翻图库，实际出图在电脑上完成。还没装好 App，可以先看[鸿蒙 App 安装说明](鸿蒙%20App%20安装说明.md)。
 
-想先看操作实录，可以从 `0:26` 看专业参数、`0:46` 看 LLM 扩写确认、`1:26` 看任务详情、`1:36` 看图库。[观看演示视频（MP4）](assets/demo/app-demo.mp4)
+想先看操作实录，可以从 `0:26` 看专业参数、`0:46` 看 LLM 扩写确认、`1:26` 看任务详情、`1:36` 看图库。
+
+https://github.com/user-attachments/assets/b1bc7f0f-bb8e-4f53-94bb-be2b8ace925b
+
+[下载原画质视频（MP4）](https://raw.githubusercontent.com/ikeWangXL/comfy-suishen/main/md/assets/demo/app-demo.mp4)
 
 ## 第一次连接
 

@@ -8,7 +8,11 @@
 
 ① 看图片尺寸、像素量和扩写方式。② 看这张图的提示词摘要。
 
-[看 App 演示（MP4，约 2 分钟）](md/assets/demo/app-demo.mp4)
+App 操作演示（约 2 分钟）
+
+https://github.com/user-attachments/assets/b1bc7f0f-bb8e-4f53-94bb-be2b8ace925b
+
+[下载原画质视频（MP4）](https://raw.githubusercontent.com/ikeWangXL/comfy-suishen/main/md/assets/demo/app-demo.mp4)
 
 ## 安装前
 
