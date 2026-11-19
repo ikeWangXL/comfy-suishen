@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover" />
+<title>Comfy Server · 本机控制台</title>
+<link rel="stylesheet" href="/console.css">
+</head>
+<body>
+<div class="console">
+  <aside class="sidebar">
+    <div class="brand"><span class="brand-mark">C</span><div><b>COMFY / SERVER</b><span>LOCAL CONSOLE</span></div></div>
+    <nav class="side-nav" aria-label="控制台导航">
+      <button class="nav-btn on" data-view="overview"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z"/></svg>概览</button>
+      <button class="nav-btn" data-view="services"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16v5H4zM4 15h16v5H4z"/><path d="M8 8.5h.01M8 17.5h.01M12 8.5h5M12 17.5h5"/></svg>服务与连接</button>
+      <button class="nav-btn" data-view="content"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7.5h7l2-2h9v13H3z"/></svg>图库与档案</button>
+      <button class="nav-btn" data-view="diagnostics"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l9 17H3z"/><path d="M12 9v5M12 17h.01"/></svg>备份与诊断</button>
+    </nav>
+    <p class="sidebar-note">仅监听 127.0.0.1:8787<br>本机控制台不会暴露到局域网。</p>
+  </aside>
+
+  <main class="main">
+    <header class="topbar frosted"><div class="topbar-inner"><div class="title-block"><h1 id="viewTitle">运行概览</h1><p id="viewSub">Server、ComfyUI 与图库当前状态</p></div><span class="server-state"><span class="state-dot"></span><span id="serverBadge">Server 运行中</span></span><span class="owner" id="ownerName">admin · 已登录</span><button class="logout" id="logoutBtn">退出</button></div></header>
+    <div class="content"><div class="content-inner">
+      <section class="view" id="overviewPanel" data-panel="overview">
+        <div class="card-grid">
+          <article class="card"><div class="card-head"><h2>电脑服务</h2><span>V1.1.0 · API 1.1</span></div><div class="status-line">运行正常</div><div class="metric-sub">API 端口 8788 · 已运行 02:18:42</div></article>
+          <article class="card"><div class="card-head"><h2>ComfyUI</h2><span>最近检查 14:20</span></div><div class="status-line">已连接</div><div class="metric-sub">http://127.0.0.1:8188 · 36 ms</div></article>
+          <article class="card"><div class="card-head"><h2>图库空间</h2><span>可写</span></div><div class="metric"><b>128.6 GB</b><span>可用</span></div><div class="meter"><span></span></div><div class="metric-sub">D:\ComfyGallery · 共 465.7 GB</div></article>
+          <article class="card"><div class="card-head"><h2>工作流配置档</h2><span>3 个档案</span></div><div class="metric"><b>人像写实</b><span>默认</span></div><div class="metric-sub">2 个可生成 · 1 个 V1 迁移档案</div></article>
+          <article class="card wide"><div class="card-head"><h2>手机连接地址</h2><span>仅可信局域网</span></div><div class="row"><div class="row-copy"><span class="row-label">http://192.168.1.20:8788</span><span class="row-desc">手机在设置或登录页输入此地址；无需二维码或配对码。</span></div><button class="btn" data-copy="http://192.168.1.20:8788">复制地址</button></div></article>
+          <article class="card"><div class="card-head"><h2>当前用户登录自启</h2><span>autoStart</span></div><div class="row"><div class="row-copy"><span class="row-label">Windows 登录后启动服务</span><span class="row-desc">不修改 ComfyUI 自身的启动方式</span></div><label class="switch"><input type="checkbox" checked data-action="autostart" aria-label="Windows 登录后启动服务"><span class="track"><span class="knob"></span></span></label></div></article>
+          <article class="card"><div class="card-head"><h2>当前队列</h2><span>实时同步</span></div><div class="metric"><b>1 运行</b><span>1 等待</span></div><div class="metric-sub">App 断线不会取消任务，重连后从 REST 恢复状态。</div></article>
+        </div>
+      </section>
+
+      <section class="view" id="servicesPanel" data-panel="services" hidden>
+        <div class="card-grid">
+          <article class="card wide"><div class="card-head"><h2>ComfyUI 连接</h2><span>仅电脑控制台可修改</span></div><div class="form-grid"><div class="field"><label for="comfyUrl">Base URL</label><input id="comfyUrl" value="http://127.0.0.1:8188" spellcheck="false"></div><div class="field"><label for="comfyPort">端口</label><input id="comfyPort" type="number" value="8188" min="1" max="65535"></div></div><div class="row"><div class="row-copy"><span class="status-line">连接正常 · 36 ms</span><span class="row-desc">最近检查 2026-11-16 14:20 · object_info 可用</span></div></div><div class="actions"><button class="btn primary" id="testComfy">测试连接</button><button class="btn" data-save="ComfyUI 连接配置">保存配置</button></div></article>
+          <article class="card"><div class="card-head"><h2>Server 监听</h2><span>网络边界</span></div><div class="row"><div class="row-copy"><span class="row-label">App API</span></div><span class="row-value">0.0.0.0:8788</span></div><div class="row"><div class="row-copy"><span class="row-label">本机控制台</span></div><span class="row-value">127.0.0.1:8787</span></div><p class="hint">控制台不会成为 LAN 管理入口；ComfyUI 端口不直接提供给手机。</p></article>
+          <article class="card"><div class="card-head"><h2>服务启动</h2><span>autoStart</span></div><div class="row"><div class="row-copy"><span class="row-label">当前用户登录自启</span><span class="row-desc">使用 Windows 当前用户配置</span></div><label class="switch"><input type="checkbox" checked data-action="autostart" aria-label="当前用户登录自启"><span class="track"><span class="knob"></span></span></label></div></article>
+          <article class="card wide"><div class="card-head"><h2>自定义 LLM</h2><span>密钥只写入、不回显</span></div><div class="form-grid"><div class="field"><label for="aiEndpoint">Endpoint</label><input id="aiEndpoint" value="https://llm.local/v1" spellcheck="false"></div><div class="field"><label for="aiModel">Model</label><input id="aiModel" value="qwen-plus" spellcheck="false"></div></div><div class="field"><label for="aiKey">API Key</label><input id="aiKey" type="password" placeholder="已保存；输入以替换" autocomplete="new-password"></div><div class="actions"><button class="btn primary" data-save="自定义 LLM 配置">保存配置</button><button class="btn danger" id="clearAiKey">清除密钥</button></div></article>
+          <article class="card wide"><div class="card-head"><h2>Owner 账号</h2><span>App 与控制台共用</span></div><div class="form-grid"><div class="field"><label for="accountName">用户名</label><input id="accountName" value="admin" autocomplete="username"></div><div class="field"><label for="currentPassword">当前密码</label><input id="currentPassword" type="password" autocomplete="current-password"></div></div><div class="field"><label for="newPassword">新密码</label><input id="newPassword" type="password" autocomplete="new-password" placeholder="留空则只修改用户名"></div><p class="hint">修改成功后旧会话会被撤销，需要重新登录；不强制修改默认账号。</p><div class="actions"><button class="btn primary" data-save="账号配置">保存账号</button></div></article>
+        </div>
+      </section>
+
+      <section class="view" id="contentPanel" data-panel="content" hidden>
+        <div class="card-grid">
+          <article class="card wide"><div class="card-head"><h2>图库根目录</h2><span>可写 · 已验证</span></div><div class="row"><div class="row-copy"><span class="row-label">D:\ComfyGallery</span><span class="row-desc">仅索引 App 任务成功生成并入库的图片，不扫描既有 output。</span></div><button class="btn" id="chooseDirectory">更改目录</button></div><div class="metric"><b>128.6 GB</b><span>剩余 / 465.7 GB</span></div><div class="meter"><span></span></div></article>
+          <article class="card wide"><div class="card-head"><h2>工作流配置档</h2><span>3 个档案</span></div><div class="workflow-list">
+            <div class="workflow-row"><div class="workflow-copy"><b>人像写实 · 默认</b><span>rev 7 · 普通 / 专业 · 指纹 a1b2c3d4</span></div><button class="btn" data-workflow="重命名">重命名</button><button class="btn danger" data-workflow="删除">删除</button></div>
+            <div class="workflow-row"><div class="workflow-copy"><b>场景概念图</b><span>rev 3 · 专业 · 指纹 e5f6a7b8</span></div><button class="btn" data-workflow="设为默认">设默认</button><button class="btn" data-workflow="重命名">重命名</button></div>
+            <div class="workflow-row"><div class="workflow-copy"><b>旧版人像档案</b><span>V1 迁移 · 重新上传 V1.1 模板以启用生成</span></div><button class="btn" data-workflow="重命名">重命名</button><button class="btn danger" data-workflow="删除">删除</button></div>
+          </div><div class="actions"><button class="btn primary" id="uploadWorkflow">上传 API JSON</button></div><p class="hint">上传后由 Server 自动检查参数、LoRA、扩写能力与支持模式；原始 JSON 不在控制台编辑。</p></article>
+        </div>
+      </section>
+
+      <section class="view" id="diagnosticsPanel" data-panel="diagnostics" hidden>
+        <div class="card-grid">
+          <article class="card"><div class="card-head"><h2>本机备份</h2><span>不含图库图片</span></div><p class="hint">备份包含设置和工作流档案。AI 密钥以当前 Windows 用户可解密的形式保存。</p><div class="actions"><button class="btn primary" id="createBackup">创建备份</button></div></article>
+          <article class="card"><div class="card-head"><h2>恢复数据</h2><span>先验证再导入</span></div><p class="hint">恢复前检查格式版本、时间与完整性；失败不会破坏当前数据。</p><div class="actions"><button class="btn" id="restoreBackup">选择备份文件</button></div></article>
+          <article class="card wide"><div class="card-head"><h2>诊断摘要</h2><span>全部检查通过</span></div><div class="row"><div class="row-copy"><span class="row-label">ComfyUI API 与节点</span></div><span class="status-line">正常</span></div><div class="row"><div class="row-copy"><span class="row-label">图库目录与磁盘</span></div><span class="status-line">正常</span></div><div class="row"><div class="row-copy"><span class="row-label">档案依赖</span><span class="row-desc">1 个 V1 迁移档案需要重新上传模板</span></div><span class="status-line warn">需注意</span></div></article>
+          <article class="card wide"><div class="card-head"><h2>脱敏运行日志</h2><span>不记录密码、Token、密钥或完整提示词</span></div><div class="log-list"><div class="log-row"><span class="log-time">14:20:18</span><span class="log-level">INFO</span><span class="log-message">ComfyUI 连接检查通过 · requestId req_a18f</span></div><div class="log-row"><span class="log-time">14:18:02</span><span class="log-level">INFO</span><span class="log-message">队列状态已从 REST 快照同步</span></div><div class="log-row"><span class="log-time">14:12:44</span><span class="log-level warn">WARN</span><span class="log-message">V1 迁移档案缺少 V1.1 参数标记</span></div><div class="log-row"><span class="log-time">14:04:11</span><span class="log-level">INFO</span><span class="log-message">Server 已监听 App API 8788 与本机控制台 8787</span></div></div></article>
+        </div>
+      </section>
+    </div></div>
+
+    <div class="scrim" id="scrim"></div>
+    <section class="sheet" id="directorySheet" role="dialog" aria-modal="true" aria-labelledby="directoryTitle" inert><div class="sheet-head"><h2 id="directoryTitle">选择图库根目录</h2><button class="icon-btn" id="closeSheet" aria-label="关闭">✕</button></div><div class="sheet-body"><p class="hint">通过 Server 返回的 Windows 盘符逐级选择，也可以在当前位置新建目录。</p><button class="directory-item">C: · 系统盘</button><button class="directory-item on" data-path="D:\ComfyGallery">D:\ComfyGallery · 可写</button><button class="directory-item" data-path="E:\ComfyGallery">E:\ComfyGallery · 可写</button></div><div class="sheet-foot"><button class="btn" id="cancelSheet">取消</button><button class="btn primary" id="confirmDirectory">选择此目录</button></div></section>
+    <input type="file" id="workflowFile" accept=".json,application/json" hidden><input type="file" id="backupFile" accept=".backup,.json" hidden>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </main>
+</div>
+
+<script src="/console.js" defer></script>
+</body>
+</html>
+

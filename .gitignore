@@ -1,0 +1,18 @@
+# 发布仓库的根目录文件
+/*
+!/.gitignore
+!/comfy_server/
+!/md/
+!/README.md
+!/LICENSE
+
+# Server 本地依赖、运行数据和测试脚本
+/comfy_server/**/node_modules/
+/comfy_server/**/dist/
+/comfy_server/**/coverage/
+/comfy_server/**/.cache/
+/comfy_server/**/.env
+/comfy_server/**/data/
+/comfy_server/**/*.log
+/comfy_server/**/local-config.json
+/comfy_server/start-test.cmd
