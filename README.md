@@ -18,7 +18,7 @@
 
 打开 App，输入刚才复制的手机连接地址，用控制台的账号登录。[鸿蒙 App 操作手册](md/鸿蒙%20App%20操作手册.md)
 
-如果生成页没有工作流，到控制台「图库与档案」上传从 ComfyUI 导出的 API 格式 JSON。需要在手机上调整参数时，可以先给工作流加标记。[工作流适配指南](md/ComfyUI%20工作流适配指南.md)
+如果生成页没有工作流，到控制台「图库与档案」上传从 ComfyUI 导出的 API 格式 JSON。需要在手机上调整参数时，可以对照示例给工作流加标记。[下载参考工作流](https://github.com/ikeWangXL/comfy-suishen/releases/download/v1.0.0-preview/Comfy-Suishen-Workflow-v1.1.json) · [工作流适配指南](md/ComfyUI%20工作流适配指南.md)
 
 ## App 出图与临时文件
 

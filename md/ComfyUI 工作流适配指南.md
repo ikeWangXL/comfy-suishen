@@ -2,6 +2,8 @@
 
 拿一份在电脑上已经能出图的工作流开始。你只需要给想在手机上调整的参数加个标记，再把工作流导入 App。
 
+通用版 v1.1 示例是 API 格式 JSON，可以对照下文看节点的标题标记、接线和图片输出。拿来出图前，先在 ComfyUI 检查缺失节点，并把模型、CLIP、VAE 和 LoRA 换成电脑上已有的文件。[下载通用版 v1.1 参考工作流](https://github.com/ikeWangXL/comfy-suishen/releases/download/v1.0.0-preview/Comfy-Suishen-Workflow-v1.1.json)
+
 ## 先让 App 能出图
 
 1. 在 ComfyUI 里打开工作流。把最终图片接到内置的「保存图像」(`SaveImage`) 或「预览图像」(`PreviewImage`)。例如把 VAE 解码的 `IMAGE` 接到它的 `images`。文本、视频或只有第三方保存节点的工作流，App 会显示不可用。
