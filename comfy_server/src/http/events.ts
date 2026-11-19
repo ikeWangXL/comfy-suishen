@@ -12,7 +12,7 @@ export interface EventsChannel {
 
 /**
  * /api/v1/events WS 事件通道骨架（API §9）：
- * - 握手鉴权 header-only（P7 冻结：ArkWS 支持自定义 Bearer header，query 兼容层不做）；
+ * - App 使用 Bearer 鉴权，Web 使用同源会话 Cookie；
  * - 事件形状 { eventId, type, serverTime, data }；消息可丢——事件是即时通知，REST 是断线恢复来源，
  *   发送失败不缓冲、不重试。
  */
@@ -38,7 +38,7 @@ export function createEventsChannel(verifyToken: (token: string) => Promise<bool
     }
     void (async () => {
       try {
-        await authenticateBearer(request, url.pathname, { verifyToken });
+        await authenticateBearer(request, url.pathname, { verifyToken, allowWebSession: true });
       } catch {
         socket.destroy();
         return;

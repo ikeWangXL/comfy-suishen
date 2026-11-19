@@ -1,6 +1,6 @@
 # Comfy 随身
 
-用鸿蒙系统设备连接 Windows 电脑上的 ComfyUI，提交生成任务、查看进度和浏览图片。
+用鸿蒙 App 或浏览器连接 Windows 电脑上的 ComfyUI，提交生成任务、查看进度和浏览图片。
 
 ## 实际演示
 
@@ -19,6 +19,10 @@
 ## 启动 Windows Server
 
 在仓库页点 **Code → Download ZIP**，解压后双击 `comfy_server/install-start.cmd`。打开控制台，确认 ComfyUI 已连接，选择一个存图目录，再复制「手机连接地址」。[Windows Server 操作手册](md/Windows%20Server%20操作手册.md)
+
+## 使用 Web 版
+
+把控制台显示的「手机连接地址」粘贴到浏览器，用 Server 账号登录。手机、平板和电脑都能用，浏览器所在设备与 Server 需要在同一个局域网。
 
 ## 安装鸿蒙 App
 

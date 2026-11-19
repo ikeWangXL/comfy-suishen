@@ -2,6 +2,7 @@ import type { IncomingMessage, ServerResponse } from 'node:http';
 import { sendSuccess } from '../http/envelope.js';
 import { httpError } from '../http/errors.js';
 import { readJsonBody } from '../http/middleware.js';
+import { isWebRequest, readWebSession, requireWebOrigin, setWebSession } from '../http/webSession.js';
 import { AccountStore } from './accountStore.js';
 
 const API_PREFIX = '/api/v1';
@@ -50,6 +51,8 @@ export async function handleAuthRoutes(request: IncomingMessage, response: Serve
 }
 
 async function login(request: IncomingMessage, response: ServerResponse, requestId: string, deps: AuthRoutesDeps): Promise<void> {
+  const web = isWebRequest(request);
+  if (web) requireWebOrigin(request);
   const remoteAddress = request.socket.remoteAddress ?? 'unknown';
   if (!consumeLoginAttempt(remoteAddress)) {
     throw httpError('RATE_LIMITED', '登录尝试过于频繁，请稍后再试。');
@@ -65,16 +68,18 @@ async function login(request: IncomingMessage, response: ServerResponse, request
     throw httpError('LOGIN_FAILED', '用户名或密码错误。');
   }
   const accessToken = deps.accountStore.issueToken();
+  if (web) setWebSession(request, response, accessToken);
   sendSuccess(response, {
-    accessToken,
+    ...(web ? {} : { accessToken }),
     account: { username },
     server: { serverId: deps.serverId, version: deps.serverVersion, apiVersion: deps.apiVersion }
   }, requestId);
 }
 
 async function logout(request: IncomingMessage, response: ServerResponse, requestId: string, deps: AuthRoutesDeps): Promise<void> {
-  const token = extractBearerToken(request);
+  const token = extractBearerToken(request) ?? readWebSession(request);
   if (token) deps.accountStore.revokeToken(token);
+  if (isWebRequest(request)) setWebSession(request, response, '');
   sendSuccess(response, { loggedOut: true }, requestId);
 }
 
@@ -115,6 +120,7 @@ async function putAccount(request: IncomingMessage, response: ServerResponse, re
   await deps.accountStore.changeCredentials(nextUsername, nextPassword);
   // 修改后撤销全部旧会话并要求重新登录（API §3；不强制用户修改默认凭据）
   deps.accountStore.revokeAllTokens();
+  if (isWebRequest(request)) setWebSession(request, response, '');
   const username = deps.accountStore.getUsername() ?? '';
   sendSuccess(response, { username }, requestId);
 }

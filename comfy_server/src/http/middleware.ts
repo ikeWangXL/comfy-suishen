@@ -1,6 +1,7 @@
 import { isIP } from 'node:net';
 import type { IncomingMessage } from 'node:http';
 import { httpError } from './errors.js';
+import { readWebSession } from './webSession.js';
 
 export const DEFAULT_JSON_BODY_LIMIT_BYTES = 20 * 1024 * 1024;
 
@@ -44,6 +45,7 @@ export function readJsonBody(request: IncomingMessage, limitBytes: number = DEFA
 export interface BearerAuthOptions {
   exemptPaths?: readonly string[];
   verifyToken?: (token: string) => Promise<boolean>;
+  allowWebSession?: boolean;
 }
 
 // S2 接线：鉴权豁免面仅 GET /health、POST /auth/login、gallery thumbnail/file（裁决 Q3）；
@@ -51,7 +53,7 @@ export interface BearerAuthOptions {
 export async function authenticateBearer(request: IncomingMessage, pathname: string, options: BearerAuthOptions = {}): Promise<void> {
   if (options.exemptPaths?.includes(pathname)) return;
   const match = /^Bearer\s+(\S+)$/i.exec(request.headers.authorization ?? '');
-  const token = match?.[1] ?? '';
+  const token = match?.[1] ?? (options.allowWebSession ? readWebSession(request) : undefined);
   if (!token) throw httpError('AUTH_REQUIRED', '缺少访问令牌，请先登录。');
   const valid = options.verifyToken ? await options.verifyToken(token) : false;
   if (!valid) throw httpError('AUTH_REQUIRED', '访问令牌无效或已撤销，请重新登录。');

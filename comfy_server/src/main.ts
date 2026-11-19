@@ -6,6 +6,7 @@ import { protectSecret, unprotectSecret } from './secretStore.js';
 import { AiModelListError, aiBaseUrl, listAiModels, savedHeaders } from './aiExpansion.js';
 import { lanIpv4Addresses } from './lanAddresses.js';
 import { consoleCss, consoleJs, consolePage } from './consolePage.js';
+import { serveWebPage } from './http/webPage.js';
 import { newRequestId, sendError, sendSuccess } from './http/envelope.js';
 import { HttpError, httpError, normalizeError } from './http/errors.js';
 import { authenticateBearer, isPrivateLanAddress, readJsonBody } from './http/middleware.js';
@@ -422,6 +423,7 @@ async function dispatch(request: IncomingMessage, response: ServerResponse, isCo
   }
   const isApiPath = pathname === API_PREFIX || pathname.startsWith(`${API_PREFIX}/`);
   if (!isApiPath) {
+    if (!isConsolePort && await serveWebPage(request, response, pathname)) return;
     throw httpError('NOT_FOUND', '接口不存在。');
   }
 
@@ -431,7 +433,8 @@ async function dispatch(request: IncomingMessage, response: ServerResponse, isCo
   const isGalleryAssetPath = /^\/api\/v1\/gallery\/images\/[^/]+\/(?:thumbnail|file)$/.test(pathname);
   await authenticateBearer(request, pathname, {
     exemptPaths: isGalleryAssetPath ? [pathname] : undefined,
-    verifyToken: async (token) => context.accountStore.verifyToken(token)
+    verifyToken: async (token) => context.accountStore.verifyToken(token),
+    allowWebSession: !isConsolePort
   });
 
   if (pathname.startsWith(`${API_PREFIX}/auth/`)) {
