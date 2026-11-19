@@ -2,6 +2,14 @@
 
 用鸿蒙系统设备连接 Windows 电脑上的 ComfyUI，提交生成任务、查看进度和浏览图片。
 
+## 实际演示
+
+<img src="md/assets/demo/annotated/generated-carousel.svg" width="260" alt="生成页成图轮播，① 图片尺寸、像素量和扩写方式，② 提示词摘要">
+
+① 看图片尺寸、像素量和扩写方式。② 看这张图的提示词摘要。
+
+[看 App 演示（MP4，约 2 分钟）](md/assets/demo/app-demo.mp4)
+
 ## 安装前
 
 - **电脑**需要 64 位 Windows 10 或 11、Node.js 26 或更高版本，以及能正常出图的 ComfyUI。Server 启动时需要联网安装依赖。[Node.js 下载](https://nodejs.org/zh-cn/download)
